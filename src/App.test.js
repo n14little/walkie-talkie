@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import App from './App';
 import { act } from 'react-dom/test-utils';
 
-fetchMock.get('http://localhost:8080/prayer-requests', {
+fetchMock.get('http://localhost:8000/prayer-requests', {
   status: 200,
   body: [
     {

@@ -5,7 +5,7 @@ function App() {
   const [prayerRequests, setPrayerRequests] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:8080/prayer-requests');
+      const response = await fetch('http://localhost:8000/prayer-requests');
       const prayers = await response.json();
       setPrayerRequests(prayers);
     };
