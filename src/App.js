@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [prayerRequests, setPrayerRequests] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('http://localhost:8080/prayer-requests');
+      const prayers = await response.json();
+      setPrayerRequests(prayers);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Prayer Requests</h1>
       </header>
+      <main>
+        {prayerRequests.map((pr) => (
+          <li key={pr.id}>
+            <h3>{pr.title}</h3>
+            <p>{pr.request}</p>
+          </li>
+        ))}
+      </main>
     </div>
   );
 }
