@@ -24,6 +24,15 @@ test('goes to next prayer request', () => {
     expect(getByText(pr2.request)).toBeInTheDocument();
 });
 
+test('next goes back to beginning when on last prayer request', () => {
+    const { getByText } = render(<PrayerRequest prayerRequests={prayerRequests} initialSelectedPr={pr3.id}/>);
+
+    fireEvent.click(getByText('Next'));
+
+    expect(getByText(pr1.title)).toBeInTheDocument();
+    expect(getByText(pr1.request)).toBeInTheDocument();
+});
+
 test('goes to previous prayer request', () => {
     const { getByText } = render(<PrayerRequest prayerRequests={prayerRequests} initialSelectedPr={pr3.id}/>);
 
@@ -31,4 +40,13 @@ test('goes to previous prayer request', () => {
 
     expect(getByText(pr2.title)).toBeInTheDocument();
     expect(getByText(pr2.request)).toBeInTheDocument();
+});
+
+test('previous goes to end when on first prayer request', () => {
+    const { getByText } = render(<PrayerRequest prayerRequests={prayerRequests} initialSelectedPr={pr1.id}/>);
+
+    fireEvent.click(getByText('Previous'));
+
+    expect(getByText(pr3.title)).toBeInTheDocument();
+    expect(getByText(pr3.request)).toBeInTheDocument();
 });
