@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function PrayerRequest({ prayerRequests, initialSelectedPr }) {
-  const [indexOfSelectedPr, setIndexOfSelectedPr] = useState(prayerRequests.findIndex((pr) => pr.id === initialSelectedPr));
-  const selectedPrayerRequest= prayerRequests[indexOfSelectedPr]
+function PrayerRequest({ initialSelectedPrId }) {
+  const [prayerRequests, setPrayerRequests] = useState();
+  const [indexOfSelectedPr, setIndexOfSelectedPr] = useState(initialSelectedPrId || 0);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('http://localhost:8000/prayer-requests');
+      const prayers = await response.json();
+      setPrayerRequests(prayers);
+    };
+    fetchData();
+  }, []);
+
+  const selectedPrayerRequest = prayerRequests && prayerRequests[indexOfSelectedPr]
   const onNext = () => {
     const nextIndex = indexOfSelectedPr === prayerRequests.length - 1 ? 0 : indexOfSelectedPr + 1;
     setIndexOfSelectedPr(nextIndex);
@@ -12,14 +22,14 @@ function PrayerRequest({ prayerRequests, initialSelectedPr }) {
     setIndexOfSelectedPr(nextIndex);
   };
 
-  return (
+  return prayerRequests ? (
     <>
       <h2>{selectedPrayerRequest.title}</h2>
       <p>{selectedPrayerRequest.request}</p>
       <button onClick={onNext}>Next</button>
       <button onClick={onPrevious}>Previous</button>
     </>
-  );
+  ) : null;
 }
 
 export default PrayerRequest;
