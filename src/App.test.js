@@ -34,18 +34,22 @@ test('renders prayer requests header', async () => {
 });
 
 test('renders all prayer requests', async () => {
-  let wrapper, theStruggle, theStruggleRequest, firstWorldProb, firstWorldProbRequest;
+  let wrapper;
   act(() => {
     wrapper = render(<App />);
   });
   const { findByText } = wrapper;
-  theStruggle = await findByText('The Struggle Is Real');
-  theStruggleRequest = await findByText('My kids will eat their dinner');
-  firstWorldProb = await findByText('A Real First-World Problem');
-  firstWorldProbRequest = await findByText('The grocery store would receive a shipment of toilet paper');
+  const theStruggle = await findByText('The Struggle Is Real');
+  const theStruggleRequest = await findByText('My kids will eat their dinner');
+  const firstWorldProb = await findByText('A Real First-World Problem');
+  const firstWorldProbRequest = await findByText('The grocery store would receive a shipment of toilet paper');
 
   expect(theStruggle).toBeInTheDocument();
   expect(theStruggleRequest).toBeInTheDocument();
   expect(firstWorldProb).toBeInTheDocument();
   expect(firstWorldProbRequest).toBeInTheDocument();
+});
+
+test('renders button to start prayer walk mode', () => {
+
 });
