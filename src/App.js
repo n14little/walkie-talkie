@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import PrayerRequest from './PrayerRequest';
 import './App.css';
 
 function App() {
-  const [prayerRequests, setPrayerRequests] = useState([]);
+  const [prayerRequests, setPrayerRequests] = useState();
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('http://localhost:8000/prayer-requests');
@@ -11,19 +12,13 @@ function App() {
     };
     fetchData();
   }, []);
-
   return (
     <div className="App">
       <header className="App-header">
         <h1>Prayer Requests</h1>
       </header>
       <main>
-        {prayerRequests.map((pr) => (
-          <li key={pr.id}>
-            <h3>{pr.title}</h3>
-            <p>{pr.request}</p>
-          </li>
-        ))}
+        {prayerRequests ? <PrayerRequest prayerRequests={prayerRequests} initialSelectedPr={prayerRequests[0].id}/> : <h1>Loading...</h1>}
       </main>
     </div>
   );
