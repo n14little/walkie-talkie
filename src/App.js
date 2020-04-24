@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
+import PrayerRequests from './PrayerRequests';
 
 function App() {
-  const [prayerRequests, setPrayerRequests] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('http://localhost:8000/prayer-requests');
-      const prayers = await response.json();
-      setPrayerRequests(prayers);
-    };
-    fetchData();
-  }, []);
 
   return (
     <div className="App">
@@ -18,12 +10,9 @@ function App() {
         <h1>Prayer Requests</h1>
       </header>
       <main>
-        {prayerRequests.map((pr) => (
-          <li key={pr.id}>
-            <h3>{pr.title}</h3>
-            <p>{pr.request}</p>
-          </li>
-        ))}
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <PrayerRequests/>
+        </Suspense>
       </main>
     </div>
   );
