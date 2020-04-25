@@ -26,8 +26,8 @@ function PrayerRequest({ initialSelectedPrId }) {
     <>
       <h2>{selectedPrayerRequest.title}</h2>
       <p>{selectedPrayerRequest.request}</p>
-      <button onClick={onNext}>Next</button>
       <button onClick={onPrevious}>Previous</button>
+      <button onClick={onNext}>Next</button>
     </>
   ) : null;
 }
